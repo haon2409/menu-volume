@@ -175,7 +175,7 @@ class VolumeBarView(AppKit.NSView):
             icon_path = "airpods_pro_icon.png"
         elif "airpods" in device_name:
             icon_path = "airpods_icon.png"
-        elif "jbl" in device_name or "marshall" in device_name:
+        elif any(brand in device_name for brand in ["jbl", "marshall", "hk"]):
             icon_path = "bluetooth_speaker_icon.png"
         elif "macbook" in device_name or "speakers" in device_name:
             icon_path = "internal_speaker_icon.png"
