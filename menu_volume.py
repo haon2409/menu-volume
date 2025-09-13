@@ -226,7 +226,7 @@ class MenuVolumeBarApp:
         self.last_device = None
         self.use_fallback = False
 
-        self.volume_view = VolumeBarView.alloc().initWithFrame_(AppKit.NSRect(AppKit.NSPoint(0, 0), AppKit.NSSize(120, 3)))
+        self.volume_view = VolumeBarView.alloc().initWithFrame_(AppKit.NSRect(AppKit.NSPoint(0, 0), AppKit.NSSize(70, 3)))
         self.volume_view.setOnVolumeChanged_(self.on_volume_changed)
         self.status_item.setView_(self.volume_view)
 
