@@ -38,7 +38,7 @@ class VolumeBarView(AppKit.NSView):
             self.current_center_y = 0
             self.last_center_x = 0
             self.current_device = "Unknown"
-            self.battery_level = None  # Giữ thuộc tính này để tương thích
+            self.battery_level = None
         return self
 
     def setVolume_(self, volume):
@@ -181,9 +181,18 @@ class VolumeBarView(AppKit.NSView):
             icon_path = "internal_speaker_icon.png"
         else:
             icon_path = "internal_speaker_icon.png"
-        image = AppKit.NSImage.alloc().initWithContentsOfFile_(icon_path)
-        if not image:
-            image = AppKit.NSImage.alloc().initWithContentsOfFile_("internal_speaker_icon.png")
+        # Truy cập file icon: ưu tiên bundle nếu có, fallback thư mục hiện tại
+        bundle = AppKit.NSBundle.mainBundle()
+        image_path = bundle.pathForResource_ofType_(icon_path.split('.')[0], icon_path.split('.')[1])
+        if not image_path:
+            # Fallback cho chạy trực tiếp: tìm từ thư mục hiện tại
+            current_dir = os.getcwd()
+            image_path = os.path.join(current_dir, icon_path)
+            if not os.path.exists(image_path):
+                # Fallback cuối: dùng internal_speaker_icon.png
+                image_path = os.path.join(current_dir, "internal_speaker_icon.png")
+        
+        image = AppKit.NSImage.alloc().initWithContentsOfFile_(image_path)
         if image:
             image_size = self.circle_radius * 0.8
             image.drawInRect_fromRect_operation_fraction_(
@@ -237,7 +246,7 @@ class MenuVolumeBarApp:
             print(f"Device changed to: {device_name_str}")
             self.volume_view.setDevice_(device_name_str)
             self.last_device = device_name_str
-            self.update_battery_level()  # Cập nhật mức pin khi thiết bị thay đổi
+            self.update_battery_level()
 
         coreaudio_lib.registerDeviceListener(on_device_changed)
 
@@ -247,13 +256,13 @@ class MenuVolumeBarApp:
         self.last_device = initial_device
 
         self.update_volume()
-        self.update_battery_level()  # Cập nhật mức pin ban đầu
+        self.update_battery_level()
 
-        # Timer cho âm lượng (0.5 giây)
+        # Timer cho âm lượng
         self.volume_timer = AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
             0.5, self, objc.selector(self.check_volume, signature=b'v@:'), None, True
         )
-        # Timer cho mức pin (1 phút = 60 giây)
+        # Timer cho mức pin
         self.battery_timer = AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
             60, self, objc.selector(self.update_battery_level, signature=b'v@:'), None, True
         )
@@ -261,6 +270,11 @@ class MenuVolumeBarApp:
 
     def set_up_menu_bar_only(self):
         self.app.setActivationPolicy_(AppKit.NSApplicationActivationPolicyAccessory)
+        # Tạo menu ngữ cảnh với tùy chọn Quit
+        menu = AppKit.NSMenu.alloc().init()
+        quit_item = AppKit.NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
+        menu.addItem_(quit_item)
+        self.status_item.setMenu_(menu)
 
     def get_volume(self):
         volume = coreaudio_lib.getSystemVolume()
@@ -317,15 +331,22 @@ class MenuVolumeBarApp:
         self.update_volume()
 
     def update_battery_level(self):
-        try:            
-            current_output = subprocess.check_output(["/opt/homebrew/bin/SwitchAudioSource", "-c"], text=True).strip()
+        try:
+            # Lấy đường dẫn SwitchAudioSource từ bundle
+            bundle = AppKit.NSBundle.mainBundle()
+            switch_audio_path = bundle.pathForResource_ofType_('SwitchAudioSource', '')
+            if not switch_audio_path:
+                self.volume_view.setBatteryLevel_(None)
+                return
+            # Gọi SwitchAudioSource từ bundle
+            current_output = subprocess.check_output([switch_audio_path, '-c'], text=True, encoding='utf-8').strip()
             if not current_output:
                 self.volume_view.setBatteryLevel_(None)
                 return
-            output = subprocess.check_output(["system_profiler", "SPBluetoothDataType"], text=True)
+            output = subprocess.check_output(["system_profiler", "SPBluetoothDataType"], text=True, encoding='utf-8')
             battery_level = self.parse_battery_level(output, current_output)
             self.volume_view.setBatteryLevel_(battery_level)
-        except subprocess.CalledProcessError:
+        except (subprocess.CalledProcessError, FileNotFileError):
             self.volume_view.setBatteryLevel_(None)
 
     def parse_battery_level(self, output, current_output):
