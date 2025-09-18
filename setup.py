@@ -3,12 +3,12 @@ from setuptools import setup
 import glob
 import os
 
-# Lấy tất cả file hình ảnh (.png) trong thư mục hiện tại
-image_files = glob.glob('*.png')
+# Lấy tất cả file hình ảnh (.png) trong thư mục assets
+image_files = glob.glob('assets/*.png')
 
 # Danh sách tài nguyên cần đóng gói
 DATA_FILES = [
-    ('', ['libcoreaudio.dylib', 'SwitchAudioSource'] + image_files),
+    ('assets', ['libcoreaudio.dylib', 'SwitchAudioSource', 'assets/app.icns'] + image_files),
 ]
 
 OPTIONS = {
@@ -26,7 +26,7 @@ OPTIONS = {
     },
     'packages': ['AppKit', 'objc', 'ctypes', 'subprocess'],
     'optimize': 2,
-    'iconfile': 'app.icns' if os.path.exists('app.icns') else None,
+    'iconfile': 'assets/app.icns' if os.path.exists('assets/app.icns') else None,
 }
 
 setup(

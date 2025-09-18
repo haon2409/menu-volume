@@ -8,9 +8,29 @@
 		<data>
 		OyPRbkfLvB8XF57HcnFk7RxeSQI=
 		</data>
+		<key>Resources/assets/airpods_icon.png</key>
+		<data>
+		hh1U2P6/uAFBDpjxtMLB4XmTCKI=
+		</data>
+		<key>Resources/assets/airpods_pro_icon.png</key>
+		<data>
+		ip5hbSy6vTmBEqP5G5Feqb5vGBs=
+		</data>
+		<key>Resources/assets/app.icns</key>
+		<data>
+		OyPRbkfLvB8XF57HcnFk7RxeSQI=
+		</data>
+		<key>Resources/assets/bluetooth_speaker_icon.png</key>
+		<data>
+		pLbBe9lquJkqWtb0oJ4JLlzukVU=
+		</data>
+		<key>Resources/assets/internal_speaker_icon.png</key>
+		<data>
+		901HXXAQ1S9MeVXfs0N+WuXi6rA=
+		</data>
 		<key>Resources/base_library.zip</key>
 		<data>
-		ZR9R+7Ew4TyS9+rG89px2edC4Us=
+		jJePpwPz7hZvfphJ4j24IE5UNVM=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -83,10 +103,10 @@
 			<key>requirement</key>
 			<string>cdhash H"6bcd2657099e59bef7e56c5278151e81cfc70f46"</string>
 		</dict>
-		<key>Frameworks/app.icns</key>
+		<key>Frameworks/assets</key>
 		<dict>
 			<key>symlink</key>
-			<string>../Resources/app.icns</string>
+			<string>../Resources/assets</string>
 		</dict>
 		<key>Frameworks/base_library.zip</key>
 		<dict>
@@ -530,11 +550,46 @@
 			So+DAPeCiIATnU5yCyMo232afZ1DW1uWkRnnpM3yBOw=
 			</data>
 		</dict>
+		<key>Resources/assets/airpods_icon.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wKdzQZjOYEu0U/Tm9IM+g/aqnBEjJrZFVvH4q5T6oAI=
+			</data>
+		</dict>
+		<key>Resources/assets/airpods_pro_icon.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			gYfnACJDDZ5bwnZhanrdouv7JK9SSF9oSQVhvjS5Md8=
+			</data>
+		</dict>
+		<key>Resources/assets/app.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			So+DAPeCiIATnU5yCyMo232afZ1DW1uWkRnnpM3yBOw=
+			</data>
+		</dict>
+		<key>Resources/assets/bluetooth_speaker_icon.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			S/FqwcPpe7Smn5cEQMcqVIwoRRJYt4RolyDW42yJLYg=
+			</data>
+		</dict>
+		<key>Resources/assets/internal_speaker_icon.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2wGtMS+gcC0l8aVUqbTL1RMHSYjQMhGR4LH62lSyC5w=
+			</data>
+		</dict>
 		<key>Resources/base_library.zip</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			o6Ru0V/1ibWs1R3lbLwXdwmiZ4lnGuQc1U8kJKmwnZY=
+			/qNazkjgBXRl+FVs6FUOmWQMX7aByZlMhWWCGwMTSf4=
 			</data>
 		</dict>
 		<key>Resources/lib-dynload</key>

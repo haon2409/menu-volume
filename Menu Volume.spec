@@ -5,7 +5,14 @@ a = Analysis(
     ['menu_volume.py'],
     pathex=[],
     binaries=[],
-    datas=[('libcoreaudio.dylib', '.'), ('app.icns', '.')],
+    datas=[
+        ('libcoreaudio.dylib', '.'),
+        ('assets/app.icns', 'assets'),
+        ('assets/airpods_icon.png', 'assets'),
+        ('assets/airpods_pro_icon.png', 'assets'),
+        ('assets/bluetooth_speaker_icon.png', 'assets'),
+        ('assets/internal_speaker_icon.png', 'assets'),
+    ],
     hiddenimports=['AppKit', 'objc', 'ctypes'],
     hookspath=[],
     hooksconfig={},
@@ -45,6 +52,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='Menu Volume.app',
-    icon='app.icns',
+    icon='assets/app.icns',
     bundle_identifier='com.example.menuvolumebar',
 )
