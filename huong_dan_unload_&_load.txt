@@ -1,2 +1,0 @@
-launchctl unload ~/Library/LaunchAgents/com.haonguyen.menuvolume.plist
-launchctl load ~/Library/LaunchAgents/com.haonguyen.menuvolume.plist
